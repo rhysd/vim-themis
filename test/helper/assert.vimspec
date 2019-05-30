@@ -803,6 +803,26 @@ Describe helper-assert
     End
   End
 
+  Context on self-referencing container
+    It shows normal failure message with dumping the value
+      let d = {}
+      let d.x = d
+      call s:check_throw('equals', [d, {}], '<self-referencing container>')
+      call s:check_throw('is_number', [d], '<self-referencing container>')
+      call s:check_throw('is_string', [d], '<self-referencing container>')
+      call s:check_throw('is_func', [d], '<self-referencing container>')
+      call s:check_throw('is_list', [d], '<self-referencing container>')
+      call s:check_throw('is_not_dict', [d], '<self-referencing container>')
+      call s:check_throw('is_float', [d], '<self-referencing container>')
+      call s:check_throw('empty', [d], '<self-referencing container>')
+      if 800 <= v:version
+        call s:check_throw('is_bool', [d], '<self-referencing container>')
+        call s:check_throw('is_none', [d], '<self-referencing container>')
+        call s:check_throw('is_job', [d], '<self-referencing container>')
+        call s:check_throw('is_channel', [d], '<self-referencing container>')
+      endif
+    End
+  End
 End
 
 function! s:check_throw(target, args, ...) abort
