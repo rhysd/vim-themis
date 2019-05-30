@@ -44,7 +44,7 @@ function! s:fail(lnum, result) abort
   \   stack.get_line_with_lnum(a:lnum),
   \   '',
   \   '    expected: truthy',
-  \   '         got: ' . string(a:result),
+  \   '         got: ' . themis#util#string(a:result),
   \ ])
 endfunction
 

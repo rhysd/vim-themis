@@ -47,7 +47,7 @@ endfunction
 
 function! s:default_failure_message(not, name, ...) abort
   return printf('Expected %s %s%s%s.',
-    \       string(a:1),
+    \       themis#util#string(a:1),
     \       (a:not ? 'not ' : ''),
     \       substitute(a:name, '_', ' ', 'g'),
     \       (a:0 >=# 2) ? (' ' . string(join(a:000[1:], ', '))) : '')

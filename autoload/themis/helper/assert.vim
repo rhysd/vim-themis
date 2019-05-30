@@ -52,7 +52,7 @@ function! s:assert_true(value, ...) abort
     \   'The true value was expected, but it was not the case.',
     \   '',
     \   '    expected: true',
-    \   '         got: ' . string(a:value),
+    \   '         got: ' . themis#util#string(a:value),
     \ ], a:000)
   endif
   return 1
@@ -64,7 +64,7 @@ function! s:assert_false(value, ...) abort
     \   'The false value was expected, but it was not the case.',
     \   '',
     \   '    expected: false',
-    \   '         got: ' . string(a:value),
+    \   '         got: ' . themis#util#string(a:value),
     \ ], a:000)
   endif
   return 1
@@ -77,7 +77,7 @@ function! s:assert_truthy(value, ...) abort
     \   'The truthy value was expected, but it was not the case.',
     \   '',
     \   '    expected: truthy',
-    \   '         got: ' . string(a:value),
+    \   '         got: ' . themis#util#string(a:value),
     \ ], a:000)
   endif
   return 1
@@ -90,14 +90,14 @@ function! s:assert_falsy(value, ...) abort
     \   'The falsy value was expected, but it was not the case.',
     \   '',
     \   '    expected: falsy',
-    \   '         got: ' . string(a:value),
+    \   '         got: ' . themis#util#string(a:value),
     \ ], a:000)
   endif
   return 1
 endfunction
 
 function! s:assert_compare(left, expr, right, ...) abort
-  let expr_str = join([string(a:left), a:expr, string(a:right)])
+  let expr_str = join([themis#util#string(a:left), a:expr, themis#util#string(a:right)])
   try
     let result = eval(join(['a:left', a:expr, 'a:right']))
   catch /^Vim(let):E691:/
@@ -125,8 +125,8 @@ function! s:assert_equals(actual, expect, ...) abort
     throw s:failure([
     \   'The equivalent values were expected, but it was not the case.',
     \   '',
-    \   '    expected: ' . string(a:expect),
-    \   '         got: ' . string(a:actual),
+    \   '    expected: ' . themis#util#string(a:expect),
+    \   '         got: ' . themis#util#string(a:actual),
     \ ], a:000)
   endif
   return 1
@@ -137,8 +137,8 @@ function! s:assert_not_equals(actual, expect, ...) abort
     throw s:failure([
     \   'Not the equivalent values were expected, but it was not the case.',
     \   '',
-    \   '    not expected: ' . string(a:expect),
-    \   '             got: ' . string(a:actual),
+    \   '    not expected: ' . themis#util#string(a:expect),
+    \   '             got: ' . themis#util#string(a:actual),
     \ ], a:000)
   endif
   return 1
@@ -149,8 +149,8 @@ function! s:assert_same(actual, expect, ...) abort
     throw s:failure([
     \   'The same values were expected, but it was not the case.',
     \   '',
-    \   '    expected: ' . string(a:expect),
-    \   '         got: ' . string(a:actual),
+    \   '    expected: ' . themis#util#string(a:expect),
+    \   '         got: ' . themis#util#string(a:actual),
     \ ], a:000)
   endif
   return 1
@@ -161,8 +161,8 @@ function! s:assert_not_same(actual, expect, ...) abort
     throw s:failure([
     \   'Not the same values were expected, but it was not the case.',
     \   '',
-    \   '    not expected: ' . string(a:expect),
-    \   '             got: ' . string(a:actual),
+    \   '    not expected: ' . themis#util#string(a:expect),
+    \   '             got: ' . themis#util#string(a:actual),
     \ ], a:000)
   endif
   return 1
@@ -173,8 +173,8 @@ function! s:assert_match(actual, pattern, ...) abort
     throw s:failure([
     \   'Match was expected, but did not match.',
     \   '',
-    \   '    target: ' . string(a:actual),
-    \   '    pattern: ' . string(a:pattern),
+    \   '    target: ' . themis#util#string(a:actual),
+    \   '    pattern: ' . themis#util#string(a:pattern),
     \ ], a:000)
   endif
   return 1
@@ -185,8 +185,8 @@ function! s:assert_not_match(actual, pattern, ...) abort
     throw s:failure([
     \   'Not match was expected, but matched.',
     \   '',
-    \   '    target: ' . string(a:actual),
-    \   '    pattern: ' . string(a:pattern),
+    \   '    target: ' . themis#util#string(a:actual),
+    \   '    pattern: ' . themis#util#string(a:pattern),
     \ ], a:000)
   endif
   return 1
@@ -197,12 +197,12 @@ for [s:type_value, s:type_name] in items(s:type_names)
   \   'function! s:assert_is_%s(value, ...) abort',
   \   '  return s:check_type(a:value, %s, 0, a:000)',
   \   'endfunction',
-  \ ], "\n"), s:type_name, string(s:type_name))
+  \ ], "\n"), s:type_name, themis#util#string(s:type_name))
   execute printf(join([
   \   'function! s:assert_is_not_%s(value, ...) abort',
   \   '  return s:check_type(a:value, %s, 1, a:000)',
   \   'endfunction',
-  \ ], "\n"), s:type_name, string(s:type_name))
+  \ ], "\n"), s:type_name, themis#util#string(s:type_name))
 endfor
 
 function! s:assert_type_of(value, names, ...) abort
@@ -218,7 +218,7 @@ function! s:assert_length_of(value, length, ...) abort
     \   '',
     \   '    expected length: ' . a:length,
     \   '         got length: ' . got_length,
-    \   '          got value: ' . string(a:value),
+    \   '          got value: ' . themis#util#string(a:value),
     \ ], a:000)
   endif
   return 1
@@ -231,8 +231,8 @@ function! s:assert_has_key(value, key, ...) abort
       throw s:failure([
       \   'The dictionary was expected to have a key, but it did not have.',
       \   '',
-      \   '      dictionary: ' . string(a:value),
-      \   '    expected key: ' . string(a:key),
+      \   '      dictionary: ' . themis#util#string(a:value),
+      \   '    expected key: ' . themis#util#string(a:key),
       \ ], a:000)
     endif
   elseif t == type([])
@@ -240,16 +240,16 @@ function! s:assert_has_key(value, key, ...) abort
       throw s:failure([
       \   'The array was expected to have a index, but it did not have.',
       \   '',
-      \   '             array: ' . string(a:value),
+      \   '             array: ' . themis#util#string(a:value),
       \   '      array length: ' . len(a:value),
-      \   '    expected index: ' . string(a:key),
+      \   '    expected index: ' . themis#util#string(a:key),
       \ ], a:000)
     endif
   else
     throw s:failure([
     \   'The first argument was expected to an array or a dict, but it did not have.',
     \   '',
-    \   '    value: ' . string(a:value),
+    \   '    value: ' . themis#util#string(a:value),
     \   '     type: ' . s:type(a:value),
     \ ], a:000)
   endif
@@ -262,8 +262,8 @@ function! s:assert_key_exists(value, key, ...) abort
     throw s:failure([
     \   'It was expected that a key exists in the dictionary, but it did not exist.',
     \   '',
-    \   '      dictionary: ' . string(a:value),
-    \   '    expected key: ' . string(a:key),
+    \   '      dictionary: ' . themis#util#string(a:value),
+    \   '    expected key: ' . themis#util#string(a:key),
     \ ], a:000)
   endif
   return 1
@@ -275,8 +275,8 @@ function! s:assert_key_not_exists(value, key, ...) abort
     throw s:failure([
     \   'It was expected that a key does not exist in the dictionary, but it did exist.',
     \   '',
-    \   '          dictionary: ' . string(a:value),
-    \   '    not expected key: ' . string(a:key),
+    \   '          dictionary: ' . themis#util#string(a:value),
+    \   '    not expected key: ' . themis#util#string(a:key),
     \ ], a:000)
   endif
   return 1
@@ -287,7 +287,7 @@ function! s:assert_exists(expr, ...) abort
     throw s:failure([
     \   'The target was expected to exist, but it did not exist.',
     \   '',
-    \   '    target: ' . string(a:expr),
+    \   '    target: ' . themis#util#string(a:expr),
     \ ], a:000)
   endif
   return 1
@@ -299,7 +299,7 @@ function! s:assert_cmd_exists(expr, ...) abort
     throw s:failure([
     \   'The ex command was expected to exist, but it did not exist.',
     \   '',
-    \   '    target: ' . string(a:expr),
+    \   '    target: ' . themis#util#string(a:expr),
     \ ], a:000)
   endif
   return 1
@@ -310,7 +310,7 @@ function! s:assert_empty(expr, ...) abort
     throw s:failure([
     \   'The target was expected to be empty, but it wasn''t.',
     \   '',
-    \   '    target: ' . string(a:expr),
+    \   '    target: ' . themis#util#string(a:expr),
     \ ], a:000)
   endif
   return 1
@@ -321,7 +321,7 @@ function! s:assert_not_empty(expr, ...) abort
     throw s:failure([
     \   'The target was expected not to be empty, but it was.',
     \   '',
-    \   '    target: ' . string(a:expr),
+    \   '    target: ' . themis#util#string(a:expr),
     \ ], a:000)
   endif
   return 1
@@ -379,7 +379,7 @@ function! s:check_type(value, expected_types, not, additional_message) abort
     \   '',
     \   printf('    %s expected type:%s %s', pad, expect, type_names),
     \   printf('    %s      got type: %s', pad, got_type),
-    \   printf('    %s     got value: %s', pad, string(a:value)),
+    \   printf('    %s     got value: %s', pad, themis#util#string(a:value)),
     \ ], a:additional_message)
   endif
   return 1

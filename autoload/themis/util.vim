@@ -273,6 +273,15 @@ function! themis#util#find_files(paths, filename) abort
   return themis#util#sortuniq(files)
 endfunction
 
+function! themis#util#string(value) abort
+  " Note: Safely stringify given value (#58)
+  try
+    return string(a:value)
+  catch /^Vim\%((\a\+)\)\=:E724/
+    return '<self-referencing container>'
+  endtry
+endfunction
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
